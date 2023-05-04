@@ -1,5 +1,9 @@
 import { ssmGetParameter } from '../../src/configs/app.config';
-import { SSMClient, GetParameterCommandOutput } from '@aws-sdk/client-ssm';
+import {
+  SSMClient,
+  GetParameterCommandOutput,
+  GetParameterCommand,
+} from '@aws-sdk/client-ssm';
 
 jest.mock('@aws-sdk/client-ssm');
 
@@ -34,11 +38,6 @@ describe('ssmGetParameter', () => {
     expect(value).toBe(expectedValue);
     expect(SSMClient).toHaveBeenCalledTimes(1);
     expect(SSMClient).toHaveBeenCalledWith({ region: 'ap-northeast-1' });
-    // expect(
-    //   (SSMClient as jest.Mock).mock.instances[0].send,
-    // ).toHaveBeenCalledWith(
-    //   new GetParameterCommand({ Name: ssmPath, WithDecryption: true }),
-    // );
   });
 
   it('throws an error when unable to get value', async () => {
